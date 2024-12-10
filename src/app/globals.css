@@ -1,19 +1,29 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --fill: #EFEFEF;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --fill: #101010;
   }
 }
 
 html,
 body {
   max-width: 100vw;
+  height: calc(100% - 4rem);
+  min-height: calc(100vh - 4rem);
   overflow-x: hidden;
+}
+
+body {
+  margin: 2em;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
 }
 
 body {

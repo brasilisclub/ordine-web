@@ -1,0 +1,33 @@
+.wrapper {
+  gap: 1em;
+  height: 100%;
+  display: grid;
+  height: calc(100vh - 4em);
+  grid-template-rows: 1fr 4fr 1fr;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.nav>a,
+.logout {
+  font-size: 1.25rem;
+  font-weight: medium;
+}
+
+.logout,
+.unactive {
+  color: gray;
+}
+
+.logout {
+  display: flex;
+  align-items: flex-end;
+}

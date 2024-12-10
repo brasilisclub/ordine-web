@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Sidebar } from '@/components';
 import { OrdineClientProvider } from '@/lib/OrdineClientProvider';
 
 import "./globals.css";
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <OrdineClientProvider>
+          <Sidebar />
           {children}
         </OrdineClientProvider>
       </body>
