@@ -8,7 +8,7 @@ interface OrdineClientContextValue {
   isInitialized: boolean;
 }
 
-const OrdineClientContext = createContext<OrdineClientContextValue | null>(null);
+export const OrdineClientContext = createContext<OrdineClientContextValue | null>(null);
 
 interface OrdineClientProviderProps {
   children: ReactNode;

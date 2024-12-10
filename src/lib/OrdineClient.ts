@@ -1,8 +1,10 @@
-import Swagger, { SwaggerClient } from 'swagger-client';
+import Swagger from 'swagger-client';
 
 class OrdineClient {
-  private swaggerClient: SwaggerClient | null = null;
+  private swaggerClient: any | null = null;
   private initialized: boolean = false;
+
+  [key: string]: any;
 
   async initialize(): Promise<void> {
     if (this.initialized) return;
@@ -29,10 +31,10 @@ class OrdineClient {
 
       this.swaggerClient = await Swagger({
         spec,
-        requestInterceptor: (req) => {
+        requestInterceptor: (req: any) => {
           return req;
         },
-        responseInterceptor: (res) => {
+        responseInterceptor: (res: any) => {
           return res;
         }
       });
@@ -55,7 +57,7 @@ class OrdineClient {
     }
 
     Object.keys(this.swaggerClient.apis).forEach((apiGroupName) => {
-      const apiGroup = this.swaggerClient.apis[apiGroupName as keyof SwaggerClient];
+      const apiGroup = this.swaggerClient.apis[apiGroupName];
 
       Object.keys(apiGroup).forEach((apiMethodName) => {
         if (typeof apiGroup[apiMethodName] === 'function') {
