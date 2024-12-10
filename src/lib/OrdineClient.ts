@@ -38,43 +38,11 @@ class OrdineClient {
           return res;
         }
       });
-      this.createApiMethods();
       this.initialized = true;
     } catch (error) {
       console.error('Error initializing OrdineClient:', error);
       throw error;
     }
-  }
-
-  private createApiMethods(): void {
-    if (!this.swaggerClient) {
-      throw new Error('OrdineClient is not initialized');
-    }
-
-    if (!this.swaggerClient.apis || Object.keys(this.swaggerClient.apis).length === 0) {
-      console.warn('No APIs found in the Swagger client');
-      return;
-    }
-
-    Object.keys(this.swaggerClient.apis).forEach((apiGroupName) => {
-      const apiGroup = this.swaggerClient.apis[apiGroupName];
-
-      Object.keys(apiGroup).forEach((apiMethodName) => {
-        if (typeof apiGroup[apiMethodName] === 'function') {
-          this[apiGroupName] = this[apiGroupName] || {};
-          this[apiGroupName][apiMethodName] = async (params: any) => {
-            try {
-              console.log(`Calling ${apiGroupName}.${apiMethodName} with params:`, params);
-              const apiResponse = await apiGroup[apiMethodName as keyof typeof apiGroup](params);
-              return apiResponse.body;
-            } catch (error) {
-              console.error(`Error calling ${apiGroupName}.${apiMethodName}:`, error);
-              throw error;
-            }
-          };
-        }
-      });
-    });
   }
 
   getAvailableApis(): string[] {
