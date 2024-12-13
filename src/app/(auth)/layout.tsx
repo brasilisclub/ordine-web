@@ -20,7 +20,7 @@ export default function RootLayout({
         <OrdineClientProvider>
           <main className={styles.main}>
             <section className={styles.branding}>
-              <h2>Facilite a gestão do seu negócio com Ordine</h2>
+              <h2>Facilite a gestão do seu negócio com <span>Ordine</span></h2>
               <p>Powered by Brasilis Club</p>
             </section>
             <section className={styles.login}>

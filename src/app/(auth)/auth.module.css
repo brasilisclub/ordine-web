@@ -13,18 +13,24 @@
 }
 
 .branding {
-  background: #00008B;
+  background: #86080a;
   grid-template-rows: 1fr 1fr;
 }
 
 .branding>h2 {
   color: white;
+  font-weight: 500;
   font-size: 2.25rem;
+}
+
+.branding>h2>span {
+  text-decoration: underline;
 }
 
 .branding>p {
   color: white;
   display: flex;
+  font-weight: 600;
   align-items: flex-end;
 }
 

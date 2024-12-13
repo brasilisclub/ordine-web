@@ -10,7 +10,7 @@
 }
 
 .link {
-  color: #00008B;
+  color: var(--system-accent-color);
   padding: 1rem;
   font-size: 1rem;
   cursor: pointer;
@@ -19,14 +19,17 @@
   text-align: center;
   display: inline-block;
   transition: all 0.5s ease;
+  border: 0.125rem solid transparent;
 }
 
 .link:focus {
-  -webkit-box-shadow: 0 0 0 .25rem #00008B20;
-  box-shadow: 0 0 0 .25rem #00008B20;
+  border: 0.125rem solid var(--system-accent-color);
+  box-shadow: 0 0 0 .25rem var(--system-accent-color-with-opacity);
+  -webkit-box-shadow: 0 0 0 .25rem var(--system-accent-color-with-opacity);
 }
 
 .link:hover {
-  -webkit-box-shadow: 0 0 0 .25rem #00008B20;
-  box-shadow: 0 0 0 .25rem #00008B20;
+  border: 0.125rem solid var(--system-accent-color);
+  box-shadow: 0 0 0 .25rem var(--system-accent-color-with-opacity);
+  -webkit-box-shadow: 0 0 0 .25rem var(--system-accent-color-with-opacity);
 }

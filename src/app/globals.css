@@ -1,6 +1,8 @@
 :root {
   --system-background: systemBackground;
   --system-label: label;
+  --system-accent-color: #CE0C0F;
+  --system-accent-color-with-opacity: #CE0C0F20;
   --system-secondary-label: secondaryLabel;
   --system-tertiary-label: tertiaryLabel;
   --system-secondary-background: secondarySystemBackground;
