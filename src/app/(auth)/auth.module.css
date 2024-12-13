@@ -1,0 +1,51 @@
+.main {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.main>* {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  display: grid;
+}
+
+.branding {
+  background: #00008B;
+  grid-template-rows: 1fr 1fr;
+}
+
+.branding>h2 {
+  color: white;
+  font-size: 2.25rem;
+}
+
+.branding>p {
+  color: white;
+  display: flex;
+  align-items: flex-end;
+}
+
+.login {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  grid-template-rows: 4fr 1fr;
+  grid-template-columns: .75fr;
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+
+  .branding {
+    display: none;
+  }
+
+  .login {
+    grid-template-columns: 1fr;
+  }
+}
