@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Sidebar } from '@/components';
-import { OrdineClientProvider } from '@/lib/OrdineClientProvider';
 
 import "@/app/globals.css";
 import "./logged.css";
@@ -13,15 +12,13 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
-}>) {
+    children: React.ReactNode;
+  }>) {
   return (
     <html lang="pt-BR">
       <body>
-        <OrdineClientProvider>
-          <Sidebar />
-          {children}
-        </OrdineClientProvider>
+        <Sidebar />
+        {children}
       </body>
     </html>
   );
