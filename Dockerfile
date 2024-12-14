@@ -1,4 +1,4 @@
-FROM oven/bun AS base
+FROM oven/bun:1.1-debian AS base
 
 FROM base AS deps
 RUN apt-get update && apt-get install -y \
@@ -24,14 +24,17 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY env.sample .env
+
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN bun run build
 
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN adduser --system --uid 1001 nextjs
 
