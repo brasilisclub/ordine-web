@@ -21,5 +21,8 @@
     "@types/react-dom": "^19",
     "eslint": "^8",
     "eslint-config-next": "15.0.4"
+  },
+  "eslintConfig": {
+    "extends": ["next/core-web-vitals", "next/typescript"]
   }
 }
