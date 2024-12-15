@@ -7,10 +7,15 @@
   grid-template-rows: 1fr 3fr 1fr 1fr;
 }
 
-.title {
+.header {
+  width: 100%;
   display: flex;
-  font-size: 2.5em;
   align-items: flex-end;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 2.5em;
 }
 
 .row {
@@ -18,4 +23,29 @@
   gap: 1em;
   width: 100%;
   height: 100%;
+}
+
+.link {
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  text-align: center;
+  display: inline-block;
+  transition: all 0.5s ease;
+  background: var(--system-accent-color);
+  border: 0.125rem solid var(--system-accent-color);
+}
+
+.link:focus {
+  border: 0.125rem solid var(--system-accent-color);
+  box-shadow: 0 0 0 .25rem var(--system-accent-color-with-opacity);
+  -webkit-box-shadow: 0 0 0 .25rem var(--system-accent-color-with-opacity);
+}
+
+.link:hover {
+  border: 0.125rem solid var(--system-accent-color);
+  box-shadow: 0 0 0 .25rem var(--system-accent-color-with-opacity);
 }
