@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sidebar } from '@/components';
+import { Gate, Sidebar } from '@/components';
 
 import "@/app/globals.css";
 import "./logged.css";
@@ -17,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <Sidebar />
-        {children}
+        <Gate>
+          <Sidebar />
+          {children}
+        </Gate>
       </body>
     </html>
   );

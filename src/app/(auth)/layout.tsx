@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Gate } from "@/components";
 
 import "@/app/globals.css";
 import styles from "./auth.module.css"
@@ -16,15 +17,17 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <main className={styles.main}>
-          <section className={styles.branding}>
-            <h2>Facilite a gestão do seu negócio com <span>Ordine</span></h2>
-            <p>Powered by Brasilis Club</p>
-          </section>
-          <section className={styles.login}>
-            {children}
-          </section>
-        </main>
+        <Gate>
+          <main className={styles.main}>
+            <section className={styles.branding}>
+              <h2>Facilite a gestão do seu negócio com <span>Ordine</span></h2>
+              <p>Powered by Brasilis Club</p>
+            </section>
+            <section className={styles.login}>
+              {children}
+            </section>
+          </main>
+        </Gate>
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import login from '@/actions/login';
 import styles from './login.module.css';
 
 export default function LoginPage() {
+  
   return (
     <form className={styles.form} action={login}>
       <h2>Bem-vindo de volta</h2>

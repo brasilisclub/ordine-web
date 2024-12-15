@@ -9,15 +9,21 @@ async function login(formData: FormData) {
 
   const response = await authApi?.post_auth_login({
     "user": { username, password }
-  })
+  });
 
   switch (response?.status) {
     case 200:
+      if (response.body?.token) {
+        sessionStorage.setItem('token', response.body.token);
+      }
+
       redirect('/');
-      break
+      break;
+
     default:
-      alert('Um erro inesperado ocorreu.')
+      alert('Um erro inesperado ocorreu.');
   }
 }
 
 export default login;
+

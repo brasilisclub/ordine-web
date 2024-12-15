@@ -8,7 +8,7 @@ const CONSTANTS = {
 
 interface ApiResponse {
   status: number;
-  body: unknown;
+  body: any;
   headers: Record<string, string>;
 }
 
