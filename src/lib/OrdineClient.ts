@@ -1,31 +1,11 @@
 import Swagger from 'swagger-client';
+import { SwaggerSpec, SwaggerApiMethod } from '@/types/api';
 
 const CONSTANTS = {
   CACHE_DURATION_MS: 24 * 60 * 60 * 1000, // 24h
   LOCAL_STORAGE_SPEC_KEY: 'ordine_swagger_spec',
   LOCAL_STORAGE_TIMESTAMP_KEY: 'ordine_swagger_spec_timestamp',
 } as const;
-
-interface ApiResponse {
-  status: number;
-  body: any;
-  headers: Record<string, string>;
-}
-
-type SwaggerApiMethod = (parameters?: Record<string, unknown>) => Promise<ApiResponse>;
-
-interface SwaggerSpec {
-  swagger: string;
-  info: {
-    title: string;
-    version: string;
-  };
-  host?: string;
-  basePath?: string;
-  schemes?: string[];
-  paths: Record<string, unknown>;
-  [key: string]: unknown;
-}
 
 class OrdineClientError extends Error {
   constructor(message: string) {

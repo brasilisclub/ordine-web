@@ -1,8 +1,7 @@
 import Link from "next/link";
-import styles from "./produtos.module.css";
+import styles from "./products.module.css";
 
-export default function Produtos() {
-  
+export default function Products() {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
@@ -10,7 +9,6 @@ export default function Produtos() {
         <Link href="" className={styles.link}>Adicionar</Link>
       </header>
       <section className={styles.listing}>
-        
       </section>
     </main>
   );

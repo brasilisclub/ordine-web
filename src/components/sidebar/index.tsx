@@ -17,11 +17,11 @@ const sidebarOption: Array<SidebarOptionInterface> = [
     "label": "Início"
   },
   {
-    "path": "/produtos",
+    "path": "/products",
     "label": "Produtos"
   },
   {
-    "path": "/comandas",
+    "path": "/ordines",
     "label": "Comandas"
   },
 ]
@@ -47,7 +47,7 @@ function Sidebar() {
       <nav className={styles.nav}>
         {navLinks}
       </nav>
-      <Link href="/user/logout" className={styles.logout}>Sair da Conta</Link>
+      <Link href="/logout" className={styles.logout}>Sair da Conta</Link>
     </aside>
   )
 }
