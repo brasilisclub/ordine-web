@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link';
 import { Button, Input } from '@/components';
 
-import register from '@/actions/register';
+import { register } from '@/actions/auth';
 
 import styles from './register.module.css';
 

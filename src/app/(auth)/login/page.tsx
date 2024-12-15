@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link';
 import { Button, Input } from '@/components';
 
-import login from '@/actions/login';
+import { login } from '@/actions/auth';
 
 import styles from './login.module.css';
 
