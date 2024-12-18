@@ -10,9 +10,9 @@ export interface Product {
   stock: number,
   category: string,
   description: string,
-  created_at: string,
-  updated_at: string,
-  deleted_at: string,
+  created_at?: string,
+  updated_at?: string,
+  deleted_at?: string,
 }
 
 export interface Ordine {
