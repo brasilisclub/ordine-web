@@ -1,0 +1,8 @@
+services:
+  ordine-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ordine-web
+    ports:
+      - "3000:3000"
