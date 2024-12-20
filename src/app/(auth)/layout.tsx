@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import Gate from "@/components/auth/gate";
+import { Onest } from "next/font/google";
+
+const onest = Onest({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-onest",
+});
 
 import "@/app/globals.css";
 
@@ -15,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={onest.variable}>
       <body>
         <Gate>{children}</Gate>
       </body>

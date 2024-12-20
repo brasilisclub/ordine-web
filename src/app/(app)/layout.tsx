@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app/sidebar";
+import { Onest } from "next/font/google";
+
+const onest = Onest({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-onest",
+});
 
 import "@/app/globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -17,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className="mx-8">
+    <html lang="pt-BR" className={onest.variable}>
+      <body className="mx-4 mb-4">
         <SidebarProvider
           style={
             {
