@@ -88,14 +88,21 @@ export default function OrdineItem({
             <span className="opacity-25">Comanda &gt;&nbsp;</span>
             {ordineData.table}
           </h1>
-          {ordineData.status ? (
-            <Button
-              variant={"outline"}
-              onClick={() => OrdineActions.close(ordineData, resolvedParams.id)}
-            >
-              Fechar Comanda
+          <div className="flex gap-4">
+            {ordineData.status ? (
+              <Button
+                variant={"outline"}
+                onClick={() =>
+                  OrdineActions.close(ordineData, resolvedParams.id)
+                }
+              >
+                Fechar Comanda
+              </Button>
+            ) : null}
+            <Button onClick={() => OrdineActions.delete(resolvedParams.id)}>
+              Deletar comanda
             </Button>
-          ) : null}
+          </div>
         </header>
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">

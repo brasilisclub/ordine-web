@@ -54,6 +54,20 @@ class ProductActions {
       id,
     );
   }
+
+  static async delete(id: string): Promise<void> {
+    if (!id) {
+      console.error("ID is required for deleting an ordine");
+      return Promise.resolve();
+    }
+    const productApi = apiClient.getApi("Product");
+    const response = await productApi?.delete_products__id_({ id });
+    if (response?.status === 200) {
+      redirect("/products");
+    } else {
+      alert("Um erro inesperado ocorreu.");
+    }
+  }
 }
 
 export default ProductActions;

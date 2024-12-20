@@ -87,6 +87,20 @@ class OrdineActions {
       id,
     );
   }
+
+  static async delete(id: string): Promise<void> {
+    if (!id) {
+      console.error("ID is required for deleting an ordine");
+      return Promise.resolve();
+    }
+    const ordineApi = apiClient.getApi("Ordine");
+    const response = await ordineApi?.delete_ordines__id_({ id });
+    if (response?.status === 200) {
+      redirect("/ordines");
+    } else {
+      alert("Um erro inesperado ocorreu.");
+    }
+  }
 }
 
 export default OrdineActions;

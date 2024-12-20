@@ -56,6 +56,9 @@ export default function ProductItem({
             <span className="opacity-25">Produto &gt;&nbsp;</span>
             {product.name}
           </h1>
+          <Button onClick={() => ProductActions.delete(String(product.id))}>
+            Deletar produto
+          </Button>
         </header>
         <ProductUpdateForm productId={resolvedParams.id} />
       </section>
