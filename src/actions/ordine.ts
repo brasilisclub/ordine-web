@@ -12,50 +12,50 @@ class OrdineActions {
     formData: FormData | T,
     id?: string,
   ): Promise<void> {
-    try {
-      const ordineApi = apiClient.getApi("Ordine");
+    const ordineApi = apiClient.getApi("Ordine");
+    const body =
+      formData instanceof FormData
+        ? {
+            client_name: formData.get("client_name")?.toString() || "",
+            status: formData.get("status") === "false" ? false : true,
+            table: Number(formData.get("table")),
+            ordine_products: formData.getAll("ordine_products") || [],
+          }
+        : formData;
 
-      const body =
-        formData instanceof FormData
-          ? {
-              client_name: formData.get("client_name")?.toString() || "",
-              status: formData.get("status") === "false" ? false : true,
-              table: Number(formData.get("table")),
-              ordine_products: formData.getAll("ordine_products") || [],
-            }
-          : formData;
+    const response = await ordineApi?.[method]({ body, id });
 
-      const response = await ordineApi?.[method]({ body, id });
-
-      if (response?.status === 200) {
-        if (method === "post_ordines" || method === "put_ordines__id_") {
-          redirect("/ordines");
-        } else if (method === "post_ordines__id__products") {
-          redirect(`/ordines/${id}`);
-        }
-      } else {
-        alert("An error occurred.");
+    if (response?.status === 200) {
+      if (method === "post_ordines" || method === "put_ordines__id_") {
+        redirect("/ordines");
       }
-    } catch (error) {
-      console.error("Error in handleOrdineRequest:", error);
-      alert("An error occurred.");
+    } else {
+      alert("Um erro inesperado ocorreu.");
     }
   }
 
-  static async get(id: string): Promise<Ordine> {
-    try {
-      const ordineApi = apiClient.getApi("Ordine");
-      const response = await ordineApi?.get_ordines__id_({ id });
+  static async get(): Promise<Ordine[]> {
+    const ordineApi = apiClient.getApi("Ordine");
+    const response = await ordineApi?.get_ordines();
+    return JSON.parse(response?.data || {});
+  }
 
-      return JSON.parse(response?.data || "{}");
-    } catch (error) {
-      console.error("Error fetching ordine:", error);
-      throw new Error("Failed to fetch ordine data.");
-    }
+  static async getById(id?: string): Promise<Ordine> {
+    const ordineApi = apiClient.getApi("Ordine");
+    const response = await ordineApi?.get_ordines__id_({ id });
+    return JSON.parse(response?.data || {});
   }
 
   static register(formData: FormData): Promise<void> {
     return OrdineActions.handleOrdineRequest("post_ordines", formData);
+  }
+
+  static update(formData: FormData, id: string): Promise<void> {
+    if (!id) {
+      console.error("ID is required for updating an ordine");
+      return Promise.resolve();
+    }
+    return OrdineActions.handleOrdineRequest("put_ordines__id_", formData, id);
   }
 
   static close(ordineData: Ordine, id: string): Promise<void> {
@@ -68,15 +68,6 @@ class OrdineActions {
     formData.append("client_name", ordineData.client_name);
     formData.append("table", ordineData.table.toString());
     formData.append("status", "false");
-
-    return OrdineActions.handleOrdineRequest("put_ordines__id_", formData, id);
-  }
-
-  static update(formData: FormData, id: string): Promise<void> {
-    if (!id) {
-      console.error("ID is required for updating an ordine");
-      return Promise.resolve();
-    }
 
     return OrdineActions.handleOrdineRequest("put_ordines__id_", formData, id);
   }

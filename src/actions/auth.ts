@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { redirect } from "next/navigation";
 import apiClient from "@/lib/ApiClient";
 
@@ -5,37 +6,46 @@ class AuthActions {
   private static async handleAuthRequest(
     method: "post_auth_login" | "post_auth_register",
     formData: FormData,
+    handleResponse: (response: any) => void,
   ): Promise<void> {
     const username = formData.get("username")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
-
     const authApi = apiClient.getApi("Auth");
+    const response = await authApi?.[method]({
+      user: { username, password },
+    });
+    handleResponse(response);
+  }
 
-    try {
-      const response = await authApi?.[method]({
-        user: { username, password },
-      });
-
-      if (response?.status === 200 && method === "post_auth_login") {
+  static login(formData: FormData): Promise<void> {
+    function handleResponse(response: any) {
+      if (response?.status === 200) {
         sessionStorage.setItem("token", response.body.token);
         redirect("/");
-      } else if (response?.status === 201 && method === "post_auth_register") {
+      } else {
+        alert("Um erro inesperado ocorreu.");
+      }
+    }
+    return AuthActions.handleAuthRequest(
+      "post_auth_login",
+      formData,
+      handleResponse,
+    );
+  }
+
+  static signup(formData: FormData): Promise<void> {
+    function handleResponse(response: any) {
+      if (response?.status === 201) {
         redirect("/login");
       } else {
         alert("Um erro inesperado ocorreu.");
       }
-    } catch (error) {
-      console.error("Error in handleAuthRequest:", error);
-      alert("Um erro inesperado ocorreu.");
     }
-  }
-
-  static login(formData: FormData): Promise<void> {
-    return AuthActions.handleAuthRequest("post_auth_login", formData);
-  }
-
-  static signup(formData: FormData): Promise<void> {
-    return AuthActions.handleAuthRequest("post_auth_register", formData);
+    return AuthActions.handleAuthRequest(
+      "post_auth_register",
+      formData,
+      handleResponse,
+    );
   }
 }
 
