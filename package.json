@@ -44,5 +44,14 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.2",
     "@eslint/eslintrc": "^3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals",
+      "next/typescript"
+    ],
+    "rules": {
+      "@typescript-eslint/no-explicit-any": "off"
+    }
   }
 }

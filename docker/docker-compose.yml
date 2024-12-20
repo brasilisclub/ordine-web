@@ -1,8 +1,8 @@
 services:
   ordine-web:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: docker/Dockerfile
     image: ordine-web
     ports:
       - "3000:3000"
