@@ -1,50 +1,35 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { redirect } from "next/navigation";
 import apiClient from "@/lib/ApiClient";
+import { ApiResponse } from "@/types/api";
 
 class AuthActions {
   private static async handleAuthRequest(
     method: "post_auth_login" | "post_auth_register",
     formData: FormData,
-    handleResponse: (response: any) => void,
-  ): Promise<void> {
+  ): Promise<ApiResponse | unknown> {
     const username = formData.get("username")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
     const authApi = apiClient.getApi("Auth");
-    const response = await authApi?.[method]({
-      user: { username, password },
-    });
-    handleResponse(response);
+    try {
+      const response = await authApi?.[method]({
+        user: { username, password },
+      });
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
 
-  static login(formData: FormData): Promise<void> {
-    function handleResponse(response: any) {
-      if (response?.status === 200) {
-        sessionStorage.setItem("token", response.body.token);
-        redirect("/");
-      } else {
-        alert("Um erro inesperado ocorreu.");
-      }
-    }
+  static login(formData: FormData): Promise<ApiResponse | unknown> {
     return AuthActions.handleAuthRequest(
       "post_auth_login",
       formData,
-      handleResponse,
     );
   }
 
-  static signup(formData: FormData): Promise<void> {
-    function handleResponse(response: any) {
-      if (response?.status === 201) {
-        redirect("/login");
-      } else {
-        alert("Um erro inesperado ocorreu.");
-      }
-    }
+  static signup(formData: FormData): Promise<ApiResponse | unknown> {
     return AuthActions.handleAuthRequest(
       "post_auth_register",
       formData,
-      handleResponse,
     );
   }
 }

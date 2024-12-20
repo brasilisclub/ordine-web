@@ -9,6 +9,7 @@ const onest = Onest({
 });
 
 import "@/app/globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Ordine",
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={onest.variable}>
       <body>
         <Gate>{children}</Gate>
+        <Toaster />
       </body>
     </html>
   );
