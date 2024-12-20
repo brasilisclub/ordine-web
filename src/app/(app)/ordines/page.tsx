@@ -1,21 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
+
 import Link from "next/link";
-import OrdineCard from "@/components/app/ordine-card";
-import { Ordine } from "@/types/app";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
+import Header from "@/components/app/header";
 import { Button } from "@/components/ui/button";
+import OrdineCard from "@/components/app/ordine-card";
+
 import OrdineActions from "@/actions/ordine";
+
+import { Ordine } from "@/types/app";
+import { RouteProps } from "@/types/route";
 
 export default function Ordines() {
   const [ordines, setOrdines] = useState<Ordine[]>([]);
+  const page: RouteProps = { label: "Comandas", href: "/ordines" };
 
   useEffect(() => {
     async function fetchOrdines() {
@@ -32,21 +30,10 @@ export default function Ordines() {
 
   return (
     <main className="flex flex-col gap-4 h-full w-full">
-      <header className="flex h-16 shrink-0 items-center gap-2">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbPage>Comandas</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </header>
-
+      <Header page={page} />
       <section className="flex flex-col gap-3" aria-labelledby="page-title">
-        <header className="flex items-center justify-between w-full mt-12">
-          <h1 className="text-4xl flex items-end" id="page-title">
+        <header className="flex items-center justify-between w-full mt-4 mb-12">
+          <h1 className="text-4xl" id="page-title">
             Comandas
           </h1>
           <Button

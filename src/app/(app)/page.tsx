@@ -1,44 +1,34 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import apiClient from "@/lib/ApiClient";
-import { Ordine, Product } from "@/types/app";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ProductPerOrdineChart } from "@/components/app/bar-chart";
+
 import Header from "@/components/app/header";
+import { ProductPerOrdineChart } from "@/components/app/bar-chart";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import OrdineActions from "@/actions/ordine";
+import ProductActions from "@/actions/product";
+
 import { RouteProps } from "@/types/route";
+import { Ordine, Product } from "@/types/app";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | []>([]);
   const [ordines, setOrdines] = useState<Ordine[] | []>([]);
+  const page: RouteProps = { label: "Visão Geral" };
 
   useEffect(() => {
-    async function getProducts() {
-      try {
-        const productApi = apiClient.getApi("Product");
-        const response = await productApi?.get_products();
-        if (response?.body) {
-          setProducts(response.body);
-        }
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+    async function fetchProducts() {
+      const data = await ProductActions.get();
+      setProducts(data);
     }
 
-    async function getOrdines() {
-      try {
-        const ordineApi = apiClient.getApi("Ordine");
-        const response = await ordineApi?.get_ordines();
-        if (response?.body) {
-          setOrdines(response.body);
-        }
-      } catch (error) {
-        console.error("Error fetching ordines:", error);
-      }
+    async function fetchOrdines() {
+      const data = await OrdineActions.get();
+      setOrdines(data);
     }
 
-    getProducts();
-    getOrdines();
+    fetchProducts();
+    fetchOrdines();
   }, []);
 
   const requested_products = ordines.reduce(
@@ -58,59 +48,54 @@ export default function Home() {
   const open_ordines = ordines.filter((ordine) => ordine.status);
   const closed_ordines = ordines.filter((ordine) => !ordine.status);
 
-  const page: RouteProps = {
-    label: "Visão Geral",
-  };
-
   return (
-    <main className="h-full mb-8">
+    <main>
       <Header page={page} />
-      <section className="flex flex-col gap-4 w-full h-full">
-        <div className="flex w-full gap-4">
-          <Card className="flex-1">
-            <CardHeader>
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Produtos Listados
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{products.length}</div>
-            </CardContent>
-          </Card>
-          <Card className="flex-1">
-            <CardHeader>
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Comandas Abertas
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{open_ordines.length}</div>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="flex w-full h-full gap-4">
-          <Card className="flex-1">
-            <CardHeader>
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Produtos Pedidos
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{requested_products}</div>
-            </CardContent>
-          </Card>
-          <Card className="flex-1">
-            <CardHeader>
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Comandas Fechadas
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{closed_ordines.length}</div>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="w-full gap-4">
+      <section className="grid grid-cols-2 gap-4 w-full">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Produtos Listados
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{products.length}</div>
+          </CardContent>
+        </Card>
+
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Comandas Abertas
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{open_ordines.length}</div>
+          </CardContent>
+        </Card>
+
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Produtos Pedidos
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{requested_products}</div>
+          </CardContent>
+        </Card>
+
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Comandas Fechadas
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{closed_ordines.length}</div>
+          </CardContent>
+        </Card>
+        <div className="col-span-2">
           <ProductPerOrdineChart chartData={chartData} />
         </div>
       </section>

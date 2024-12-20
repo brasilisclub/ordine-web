@@ -1,11 +1,14 @@
 "use client";
-import OrdineActions from "@/actions/ordine";
-import { OrdineProduct, Product } from "@/types/app";
 import { use, useEffect, useState } from "react";
-import apiClient from "@/lib/ApiClient";
-import ProductCard from "@/components/app/product-card";
-import { RouteProps } from "@/types/route";
+
 import Header from "@/components/app/header";
+import ProductCard from "@/components/app/product-card";
+
+import OrdineActions from "@/actions/ordine";
+import ProductActions from "@/actions/product";
+
+import { RouteProps } from "@/types/route";
+import { OrdineProduct, Product } from "@/types/app";
 
 export default function OrdineProducts({
   params,
@@ -25,15 +28,10 @@ export default function OrdineProducts({
 
   useEffect(() => {
     async function fetchProducts() {
-      try {
-        const productApi = apiClient.getApi("Product");
-        const response = await productApi?.get_products();
-        const data = await JSON.parse(response?.data);
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+      const data = await ProductActions.get();
+      setProducts(data);
     }
+
     async function fetchOrdineData() {
       try {
         const data = await OrdineActions.getById(resolvedParams.id);

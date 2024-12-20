@@ -1,56 +1,37 @@
 "use client";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Product } from "@/types/app";
 import { useEffect, useState } from "react";
-import apiClient from "@/lib/ApiClient";
-import ProductCard from "@/components/app/product-card";
+
 import Link from "next/link";
+import Header from "@/components/app/header";
 import { Button } from "@/components/ui/button";
+import ProductCard from "@/components/app/product-card";
+
+import ProductActions from "@/actions/product";
+
+import { Product } from "@/types/app";
+import { RouteProps } from "@/types/route";
 
 export default function OrdineProducts() {
   const [products, setProducts] = useState<Product[]>([]);
+  const page: RouteProps = { label: "Produtos" };
 
   useEffect(() => {
     async function fetchProducts() {
-      try {
-        const productApi = apiClient.getApi("Product");
-        const response = await productApi?.get_products();
-        const data = await JSON.parse(response?.data);
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+      const data = await ProductActions.get();
+      setProducts(data);
     }
     fetchProducts();
   }, []);
 
   return (
     <main className="flex flex-col gap-4 h-full w-full">
-      <header className="flex h-16 shrink-0 items-center gap-2">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbPage>Produtos</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </header>
-
+      <Header page={page} />
       <section
         className="flex flex-col gap- w-full mx-auto"
         aria-labelledby="page-title"
       >
         <header className="flex items-center justify-between w-full mt-4 mb-12">
-          <h1 className="text-4xl flex items-end" id="page-title">
+          <h1 className="text-4xl" id="page-title">
             Produtos
           </h1>
           <Button asChild>

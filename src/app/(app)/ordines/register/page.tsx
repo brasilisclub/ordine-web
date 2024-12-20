@@ -1,34 +1,14 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import Header from "@/components/app/header";
 import OrdineForm from "@/components/forms/ordine-form";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+
+import { RouteProps } from "@/types/route";
 
 export default function OrdinesRegister() {
+  const page: RouteProps = { label: "Cadastro" };
+  const links: RouteProps[] = [{ label: "Comandas", href: "/ordines" }];
   return (
     <main className="flex flex-col gap-4 h-full w-full">
-      <header className="flex h-16 shrink-0 items-center gap-2">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="/ordines">Comandas</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbPage>Cadastro</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </header>
-
+      <Header page={page} links={links} />
       <section
         className="flex flex-col gap-3 max-w-xl w-full mx-auto"
         aria-labelledby="page-title"

@@ -1,21 +1,16 @@
 "use client";
-import OrdineActions from "@/actions/ordine";
-import ProductCard from "@/components/app/product-card";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Ordine, Product } from "@/types/app";
 import { use, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+
 import Link from "next/link";
+import Header from "@/components/app/header";
+import ProductCard from "@/components/app/product-card";
+import { Button } from "@/components/ui/button";
+
+import OrdineActions from "@/actions/ordine";
 import ProductActions from "@/actions/product";
+
+import { RouteProps } from "@/types/route";
+import { Ordine, Product } from "@/types/app";
 
 export default function OrdineItem({
   params,
@@ -33,6 +28,9 @@ export default function OrdineItem({
     status: false,
     ordine_products: [],
   });
+
+  const routeLinks: RouteProps[] = [{ label: "Comandas", href: "/ordines" }];
+  const routePage: RouteProps = { label: "Mesa " + ordineData.table };
 
   useEffect(() => {
     async function fetchProducts() {
@@ -63,30 +61,14 @@ export default function OrdineItem({
   }, [resolvedParams.id]);
   return (
     <main className="flex flex-col gap-4 h-full w-full">
-      <header className="flex h-16 shrink-0 items-center gap-2">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="/ordines">Comandas</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbPage>Mesa {ordineData.table}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </header>
-
+      <Header page={routePage} links={routeLinks} />
       <section
         className="flex flex-col gap-4 w-full mx-auto"
         aria-labelledby="page-title"
       >
         <header className="flex items-center justify-between w-full mt-4 mb-12">
           <h1 className="text-4xl flex items-end" id="page-title">
-            <span className="opacity-25">Comanda &gt;&nbsp;</span>
-            {ordineData.table}
+            Mesa {ordineData.table}
           </h1>
           <div className="flex gap-4">
             {ordineData.status ? (
@@ -106,13 +88,12 @@ export default function OrdineItem({
         </header>
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
-            <h3 className="text-2xl">Informações</h3>
-            <p className="text-lg">
+            <h3 className="text-2xl font-medium">
               Status{" "}
               <span className="font-bold text-red-800">
-                {ordineData.status ? "Aberto" : "Fechado"}
+                {ordineData.status ? "aberto" : "fechado"}
               </span>
-            </p>
+            </h3>
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between w-full">

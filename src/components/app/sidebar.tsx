@@ -10,19 +10,23 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { Home, List, WalletCards } from "lucide-react";
 
 const data = [
   {
     title: "Início",
     url: "/",
+    icon: Home,
   },
   {
     title: "Produtos",
     url: "/products",
+    icon: List,
   },
   {
     title: "Comandas",
     url: "/ordines",
+    icon: WalletCards,
   },
 ];
 
@@ -47,8 +51,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu className="gap-2">
             {data.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <Link href={item.url} className="font-medium text-lg">
+                <SidebarMenuButton asChild size="lg">
+                  <Link href={item.url}>
+                    <item.icon />
                     {item.title}
                   </Link>
                 </SidebarMenuButton>

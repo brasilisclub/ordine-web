@@ -24,7 +24,7 @@ export function SignupForm({
           <Input
             name="username"
             type="username"
-            placeholder="Seu melhor nome de usuário"
+            placeholder="Usuário"
             required
           />
         </div>
@@ -32,12 +32,7 @@ export function SignupForm({
           <div className="flex items-center">
             <Label htmlFor="password">Senha</Label>
           </div>
-          <Input
-            name="password"
-            type="password"
-            placeholder="Sua senha mais segura"
-            required
-          />
+          <Input name="password" type="password" placeholder="Senha" required />
         </div>
         <Button type="submit" className="w-full">
           Cadastrar-se

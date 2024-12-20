@@ -21,13 +21,18 @@ export function LoginForm({
       <div className="grid gap-6">
         <div className="grid gap-2">
           <Label htmlFor="username">Nome de Usuário</Label>
-          <Input name="username" type="username" required />
+          <Input
+            name="username"
+            type="username"
+            placeholder="Usuário"
+            required
+          />
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
             <Label htmlFor="password">Senha</Label>
           </div>
-          <Input name="password" type="password" required />
+          <Input name="password" type="password" placeholder="Senha" required />
         </div>
         <Button type="submit" className="w-full">
           Entrar
