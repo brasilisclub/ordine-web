@@ -19,16 +19,18 @@ class Client {
     apis: Record<string, Record<string, SwaggerApiMethod>>;
   } | null = null;
   private initialized = false;
+  private initializationPromise: Promise<void> | null = null;
   private cachedSpec: SwaggerSpec | null = null;
 
-  private constructor() {}
+  private constructor() {
+    this.initializationPromise = this.initializeSync();
+  }
 
   private static instance: Client;
 
   public static getInstance(): Client {
     if (!Client.instance) {
       Client.instance = new Client();
-      Client.instance.initializeSync().catch(console.error);
     }
     return Client.instance;
   }
@@ -101,6 +103,8 @@ class Client {
   }
 
   private async initializeSync(): Promise<void> {
+    if (this.initialized) return;
+
     const { apiBaseScheme, apiBaseHost, swaggerSpecPath } = this.getEnvConfig();
     const swaggerSpecUrl = `${apiBaseScheme}${apiBaseHost}${swaggerSpecPath}`;
 
@@ -123,6 +127,7 @@ class Client {
       this.initialized = true;
     } catch (error) {
       console.error("Error initializing Client:", error);
+      throw new ClientError("Failed to initialize API client");
     }
   }
 
@@ -137,24 +142,26 @@ class Client {
     return fetchedSpec;
   }
 
-  public getApi(apiName: string): Record<string, SwaggerApiMethod> | null {
-    if (!this.initialized || !this.swaggerClient) {
-      console.warn("Swagger client not initialized");
-      return null;
+  public async getApi(
+    apiName: string,
+  ): Promise<Record<string, SwaggerApiMethod>> {
+    await this.waitForInitialization();
+
+    if (!this.swaggerClient) {
+      throw new ClientError("Swagger client not initialized");
     }
+
     const api = this.swaggerClient.apis[apiName];
     if (!api) {
-      console.warn(`API ${apiName} not found`);
-      return null;
+      throw new ClientError(`API ${apiName} not found`);
     }
 
     return api;
   }
 
-  public getAvailableApis(): string[] {
-    return this.initialized && this.swaggerClient
-      ? Object.keys(this.swaggerClient.apis)
-      : [];
+  public async getAvailableApis(): Promise<string[]> {
+    await this.waitForInitialization();
+    return this.swaggerClient ? Object.keys(this.swaggerClient.apis) : [];
   }
 
   public isInitialized(): boolean {
@@ -162,16 +169,11 @@ class Client {
   }
 
   public async waitForInitialization(): Promise<void> {
-    return new Promise<void>((resolve) => {
-      const checkInitialization = () => {
-        if (this.initialized) {
-          resolve();
-        } else {
-          setTimeout(checkInitialization, 100);
-        }
-      };
-      checkInitialization();
-    });
+    if (this.initialized) return;
+    if (!this.initializationPromise) {
+      this.initializationPromise = this.initializeSync();
+    }
+    return this.initializationPromise;
   }
 }
 

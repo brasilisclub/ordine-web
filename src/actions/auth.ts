@@ -8,7 +8,7 @@ class AuthActions {
   ): Promise<ApiResponse | unknown> {
     const username = formData.get("username")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
-    const authApi = apiClient.getApi("Auth");
+    const authApi = await apiClient.getApi("Auth");
     try {
       const response = await authApi?.[method]({
         user: { username, password },
@@ -20,17 +20,11 @@ class AuthActions {
   }
 
   static login(formData: FormData): Promise<ApiResponse | unknown> {
-    return AuthActions.handleAuthRequest(
-      "post_auth_login",
-      formData,
-    );
+    return AuthActions.handleAuthRequest("post_auth_login", formData);
   }
 
   static signup(formData: FormData): Promise<ApiResponse | unknown> {
-    return AuthActions.handleAuthRequest(
-      "post_auth_register",
-      formData,
-    );
+    return AuthActions.handleAuthRequest("post_auth_register", formData);
   }
 }
 

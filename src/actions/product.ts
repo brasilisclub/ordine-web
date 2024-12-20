@@ -14,7 +14,7 @@ class ProductActions {
     const price = Number(formData.get("price"));
     const stock = Number(formData.get("stock"));
 
-    const productApi = apiClient.getApi("Product");
+    const productApi = await apiClient.getApi("Product");
     const product: Product = { name, description, category, price, stock };
 
     const response = await productApi?.[method]({ product, id });
@@ -27,13 +27,13 @@ class ProductActions {
   }
 
   static async get(): Promise<Product[]> {
-    const productApi = apiClient.getApi("Product");
+    const productApi = await apiClient.getApi("Product");
     const response = await productApi?.get_products();
     return JSON.parse(response?.data || "{}");
   }
 
   static async getById(id: string): Promise<Product> {
-    const productApi = apiClient.getApi("Product");
+    const productApi = await apiClient.getApi("Product");
     const response = await productApi?.get_products__id_({ id });
     return JSON.parse(response?.data || "{}");
   }
@@ -60,7 +60,7 @@ class ProductActions {
       console.error("ID is required for deleting an ordine");
       return Promise.resolve();
     }
-    const productApi = apiClient.getApi("Product");
+    const productApi = await apiClient.getApi("Product");
     const response = await productApi?.delete_products__id_({ id });
     if (response?.status === 200) {
       redirect("/products");

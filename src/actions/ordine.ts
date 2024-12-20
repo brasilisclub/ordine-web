@@ -12,7 +12,7 @@ class OrdineActions {
     formData: FormData | T,
     id?: string,
   ): Promise<void> {
-    const ordineApi = apiClient.getApi("Ordine");
+    const ordineApi = await apiClient.getApi("Ordine");
     const body =
       formData instanceof FormData
         ? {
@@ -35,13 +35,13 @@ class OrdineActions {
   }
 
   static async get(): Promise<Ordine[]> {
-    const ordineApi = apiClient.getApi("Ordine");
+    const ordineApi = await apiClient.getApi("Ordine");
     const response = await ordineApi?.get_ordines();
     return JSON.parse(response?.data || {});
   }
 
   static async getById(id?: string): Promise<Ordine> {
-    const ordineApi = apiClient.getApi("Ordine");
+    const ordineApi = await apiClient.getApi("Ordine");
     const response = await ordineApi?.get_ordines__id_({ id });
     return JSON.parse(response?.data || {});
   }
@@ -93,7 +93,7 @@ class OrdineActions {
       console.error("ID is required for deleting an ordine");
       return Promise.resolve();
     }
-    const ordineApi = apiClient.getApi("Ordine");
+    const ordineApi = await apiClient.getApi("Ordine");
     const response = await ordineApi?.delete_ordines__id_({ id });
     if (response?.status === 200) {
       redirect("/ordines");
