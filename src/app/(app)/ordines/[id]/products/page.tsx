@@ -86,7 +86,6 @@ export default function OrdineProducts({
               selectedProducts.find(
                 (selectedProduct) => selectedProduct.id === product.id,
               )?.quantity || 0;
-            console.log(prevQuantity, product.name);
             return (
               <ProductCard
                 key={product.id}

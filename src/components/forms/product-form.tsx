@@ -133,7 +133,6 @@ export function ProductUpdateForm({ productId }: { productId: string }) {
     event.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData(event.currentTarget);
-    console.log(typeof formData.get("price"));
     await ProductActions.update(formData, productId as string);
     toast({
       title: "Produto atualizado com sucesso!",

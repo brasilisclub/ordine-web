@@ -24,7 +24,6 @@ export default function ProductCard({
   prevQuantity = 0,
   onAdd,
 }: ProductCardProps) {
-  console.log(prevQuantity);
   const [quantity, setQuantity] = useState(prevQuantity);
   const productId = `product-${product.id}`;
   const quantityId = `quantity-${product.id}`;
